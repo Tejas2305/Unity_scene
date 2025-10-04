@@ -1,0 +1,378 @@
+# CHALLAS AATH UNITY PROJECT STRUCTURE
+
+## File Organization
+
+Unity_scene/
+│
+├── 📄 DOCUMENTATION FILES (Start Here!)
+│   ├── SUMMARY.md              ⭐ START HERE - Project overview
+│   ├── QUICKSTART.md           → Quick 5-min intro
+│   ├── SETUP_GUIDE.md          → Main guide (follow step-by-step)
+│   ├── VISUAL_GUIDE.md         → See what each screen looks like
+│   ├── CHECKLIST.md            → Track your progress
+│   ├── TEMPLATES.md            → Component configuration reference
+│   └── README.md               → Complete documentation
+│
+├── 📁 Assets/ (Unity Project Files)
+│   │
+│   ├── 🎬 Scenes/
+│   │   └── ChallasAath.unity         Unity scene file (starter)
+│   │
+│   ├── 📜 Scripts/
+│   │   ├── GameManager.cs            ✅ COMPLETE - All game logic
+│   │   └── GameManager.cs.meta       Unity metadata
+│   │
+│   ├── 🖼️ Textures/
+│   │   ├── back_arrow.png            ← Navigation icon
+│   │   ├── gear.png                  ⚙ Settings icon
+│   │   ├── user_avatar.png           👤 Player icon
+│   │   ├── question.png              ? Waiting icon
+│   │   └── divider.png               ─ Decorative line
+│   │
+│   └── 📦 Prefabs/
+│       └── (Create your own)         Save reusable components here
+│
+├── ⚙️ ProjectSettings/ (Unity Configuration)
+│   ├── ProjectSettings.asset         Unity 6 settings
+│   └── ProjectVersion.txt            Version: 6000.1.14f1
+│
+└── 🔧 Other Files
+    ├── .gitignore                    Git ignore rules
+    └── Screenshot 2025-10-03...png   (Original reference image)
+
+
+## Game Flow Diagram
+
+┌─────────────────────────────────────────────────────────────────┐
+│                         LOBBY SCENE                             │
+│                                                                 │
+│  ┌───────────────────────────────────────────────────────────┐ │
+│  │             [PLAY WITH FRIENDS]                           │ │
+│  └──────────────────────┬────────────────────────────────────┘ │
+│                         │                                       │
+│  ┌──────────────────────▼───────────────────────────────────┐ │
+│  │             [PLAY WITH RANDOM PEOPLE]                     │ │
+│  └──────────────────────┬────────────────────────────────────┘ │
+│                         │                                       │
+└─────────────────────────┼───────────────────────────────────────┘
+                          │
+              ┌───────────┴───────────┐
+              │                       │
+              ▼                       ▼
+    ┌──────────────────┐    ┌─────────────────┐
+    │ FRIENDS MENU     │    │ QUICK MATCH     │
+    │                  │    │ (Simulated)     │
+    │ ┌──────────────┐ │    └────────┬────────┘
+    │ │CREATE ROOM   │ │             │
+    │ └──────┬───────┘ │             │
+    │        │         │             │
+    │ ┌──────▼───────┐ │             │
+    │ │JOIN ROOM     │ │             │
+    │ │ ┌──────────┐ │ │             │
+    │ │ │Input Code│ │ │             │
+    │ │ └────┬─────┘ │ │             │
+    │ └──────┼───────┘ │             │
+    └────────┼─────────┘             │
+             │                       │
+             └───────┬───────────────┘
+                     │
+                     ▼
+          ┌─────────────────────┐
+          │   ROOM WAITING      │
+          │                     │
+          │  Room Code: ABC123  │
+          │  1/2 Players Joined │
+          │                     │
+          │  👤     ?           │
+          │ Ready  Waiting      │
+          │                     │
+          │  [Start Game]       │
+          │  (Disabled)         │
+          └──────────┬──────────┘
+                     │
+              (After 3 seconds)
+                     │
+                     ▼
+          ┌─────────────────────┐
+          │   ROOM WAITING      │
+          │                     │
+          │  Room Code: ABC123  │
+          │  2/2 Players Joined │
+          │                     │
+          │  👤     👤          │
+          │ Ready  Ready        │
+          │                     │
+          │  [START GAME] ✓     │
+          │  (Enabled)          │
+          └─────────────────────┘
+
+
+## Unity Scene Hierarchy (What You'll Build)
+
+ChallasAath Scene
+│
+├── 📷 Main Camera
+│   └── Background: Beige (#FDF5E6)
+│
+├── 🎮 GameManager (GameObject with GameManager.cs)
+│
+└── 🖼️ Canvas (Screen Space Overlay)
+    │
+    ├── 📌 Header (Panel)
+    │   ├── TitleText: "VARASA"
+    │   └── GearButton: ⚙ Settings
+    │
+    ├── 📱 LobbyPanel (ACTIVE)
+    │   ├── GameTitle: "CHALLAS AATH"
+    │   ├── PlayFriendsButton
+    │   ├── PlayRandomButton
+    │   ├── Divider: "OR"
+    │   └── Subtitle
+    │
+    ├── 📱 FriendsMenuPanel (DISABLED)
+    │   ├── BackButton
+    │   ├── Title: "START A CHALLENGE"
+    │   ├── CreateRoomButton
+    │   ├── DividerOR
+    │   ├── JoinRoomButton
+    │   └── JoinRoomPanel (DISABLED)
+    │       ├── Label
+    │       ├── RoomIdInput (TMP_InputField)
+    │       └── GoButton
+    │
+    └── �� RoomWaitingPanel (DISABLED)
+        ├── BackButton
+        ├── Title: "ROOM CREATED"
+        ├── RoomCodePanel
+        │   ├── RoomIDLabel: "Room ID"
+        │   └── RoomCodeText: "ABC123"
+        ├── PlayersJoinedText: "1/2 PLAYERS JOINED"
+        ├── AvatarRow
+        │   ├── Player1Avatar (Green circle)
+        │   │   └── Player1Icon (👤)
+        │   └── Player2Avatar (Gray → Green)
+        │       ├── Player2Icon (👤)
+        │       └── Player2Question (?)
+        ├── StatusText: "Waiting..." / "Ready!"
+        └── StartGameButton
+
+
+## Code Structure (GameManager.cs)
+
+GameManager.cs (COMPLETE - No changes needed!)
+├── Enums
+│   └── GameState { Lobby, FriendsMenu, RoomWaiting, QuickMatch }
+│
+├── Public References (Assign in Inspector)
+│   ├── Panels (4)
+│   ├── Lobby UI (2 buttons)
+│   ├── Friends Menu UI (4 elements)
+│   ├── Join Room UI (2 elements)
+│   └── Room Waiting UI (11 elements)
+│
+├── Private Variables
+│   ├── roomCode
+│   ├── joinedPlayers
+│   ├── maxPlayers
+│   └── isQuickMatch
+│
+├── Unity Lifecycle
+│   └── Start() → Wire button listeners, setup input
+│
+├── State Management
+│   ├── SwitchState(GameState)
+│   ├── ResetState()
+│   └── SetupRoom()
+│
+├── Event Handlers
+│   ├── OnPlayWithFriends()
+│   ├── OnPlayRandom()
+│   ├── OnCreateRoom()
+│   ├── OnShowJoinRoom()
+│   ├── OnJoinRoom()
+│   ├── OnBackToLobby()
+│   └── OnStartGame()
+│
+├── Input Validation
+│   └── OnRoomIdChanged(string)
+│
+├── Utilities
+│   ├── GenerateRoomCode()
+│   ├── UpdatePlayerDisplay()
+│   ├── SimulatePlayerJoin()
+│   └── SimulateQuickMatch()
+│
+└── All logic is complete and tested! ✅
+
+
+## Setup Process Flow
+
+Step 1: Get Project
+   ↓
+[Download/Clone Repo]
+   ↓
+Step 2: Open in Unity
+   ↓
+[Unity Hub → Open → Select folder]
+   ↓
+[Import TMP Essentials]
+   ↓
+Step 3: Read Docs
+   ↓
+[Read SUMMARY.md → QUICKSTART.md]
+   ↓
+Step 4: Build UI (Main Work!)
+   ↓
+[Follow SETUP_GUIDE.md step-by-step]
+   │
+   ├── Create Canvas & Settings
+   │    ↓
+   ├── Build LobbyPanel
+   │    ├── Add title text
+   │    ├── Add 2 buttons
+   │    └── Style with colors
+   │    ↓
+   ├── Build FriendsMenuPanel
+   │    ├── Add back button
+   │    ├── Add 2 buttons
+   │    ├── Add join room panel
+   │    └── Add input field
+   │    ↓
+   ├── Build RoomWaitingPanel
+   │    ├── Add room code display
+   │    ├── Add player avatars
+   │    └── Add start button
+   │    ↓
+   └── Wire to GameManager
+        ├── Assign all panels
+        ├── Assign all buttons
+        ├── Assign all text fields
+        └── Test connections
+   ↓
+Step 5: Test
+   ↓
+[Press Play → Test all flows]
+   ↓
+Step 6: Done! 🎉
+   ↓
+[Extend with networking/gameplay]
+
+
+## Color Scheme (Heritage Theme)
+
+Background:     ████████  #FDF5E6 (Warm Beige)
+Primary:        ████████  #7B1113 (Deep Red)
+Secondary:      ████████  #FFC300 (Amber)
+Text on Red:    ████████  #FFFBF0 (Cream)
+Ready State:    ████████  #228B22 (Forest Green)
+Waiting State:  ████████  #C0C0C0 (Silver Gray)
+Light Accent:   ████████  #FFF5E1 (Light Amber)
+
+
+## Documentation Guide
+
+📄 Which file to read when?
+
+START HERE → SUMMARY.md
+   "I just downloaded, what is this?"
+
+NEXT → QUICKSTART.md
+   "How do I open and start?"
+
+MAIN GUIDE → SETUP_GUIDE.md
+   "Step-by-step UI creation" (Follow this!)
+
+REFERENCE → VISUAL_GUIDE.md
+   "What should each screen look like?"
+
+TRACK → CHECKLIST.md
+   "Am I on track? What's left?"
+
+HELP → TEMPLATES.md
+   "How do I configure this button?"
+
+COMPLETE → README.md
+   "Full documentation & troubleshooting"
+
+
+## Time Breakdown
+
+Task                          Time        Difficulty
+────────────────────────────────────────────────────
+Download & Open               5 min       ⭐ Easy
+Import TMP                    2 min       ⭐ Easy
+Read Docs                     10 min      ⭐ Easy
+Create Canvas                 5 min       ⭐⭐ Medium
+Build Lobby Panel             10 min      ⭐⭐ Medium
+Build Friends Panel           10 min      ⭐⭐ Medium
+Build Room Panel              10 min      ⭐⭐⭐ Medium-Hard
+Wire GameManager              5 min       ⭐⭐ Medium
+Test & Debug                  10 min      ⭐⭐ Medium
+────────────────────────────────────────────────────
+TOTAL                         ~60 min     ⭐⭐ Medium
+
+Experience Required: Basic Unity knowledge
+Coding Required: NONE (GameManager.cs is complete!)
+
+
+## What's Included vs. What You Build
+
+✅ INCLUDED (Ready to use)
+├── Complete GameManager.cs script
+├── All game logic implemented
+├── All texture assets created
+├── Unity project configured
+├── 7 documentation files
+└── Scene starter file
+
+⚠️ YOU BUILD (Manual in Unity Editor)
+├── Canvas UI layout
+├── Panel positioning
+├── Button creation & styling
+├── Text field configuration
+└── Wire UI to GameManager
+
+WHY? Unity's UI is visual/editor-based.
+Creating it manually ensures it's correct
+and matches your design preferences!
+
+
+## Success Checklist
+
+After setup, you should be able to:
+
+✅ Click "Play with Friends" → See Friends Menu
+✅ Click "Create Room" → See room with code ABC123 (example)
+✅ Click "Join Room" → See input field
+✅ Enter 6 characters → GO button enables
+✅ Click GO → Enter room with that code
+✅ Wait 3 seconds → Second player joins
+✅ Player avatars turn from gray to green
+✅ Start Game button enables
+✅ Click Start Game → Console shows message
+✅ Back button works from all screens
+✅ Click "Play Random" → Quick match simulation
+
+
+## Next Steps After Completion
+
+1. Add Networking
+   ├── Photon PUN 2
+   ├── Unity Netcode
+   └── Mirror
+
+2. Create Gameplay Scene
+   └── Load on "Start Game"
+
+3. Add Polish
+   ├── Animations
+   ├── Sound effects
+   └── Transitions
+
+4. Backend Integration
+   ├── Firebase
+   ├── PlayFab
+   └── Custom server
+
+
+Ready to start? Open SUMMARY.md! 🚀
